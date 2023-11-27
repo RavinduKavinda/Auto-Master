@@ -15,7 +15,7 @@ Make sure you have the following installed on your machine:
 1. Clone the repository to your local machine:
 
     ```bash
-    git clone 
+    git clone https://github.com/RavinduKavinda/Auto-Master.git
     ```
 
 2. Navigate to the project directory:
