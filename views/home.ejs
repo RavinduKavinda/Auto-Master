@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        .wf-force-outline-none[tabindex="-1"]:focus {
+            outline: none;
+        }
+    </style>
+    <title>Auto Masters</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Webflow" name="generator">
+    <link href="/static/home/home.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/" rel="preconnect">
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/home/home.css" media="all">
+</head>
+
+<body>
+    <div class="navbar-logo-center">
+        <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+            role="banner" class="navbar-logo-left-container-2 shadow-three w-nav">
+            <div class="container-2">
+                <div class="navbar-wrapper-2"><a href="/" class="navbar-brand-2 w-nav-brand">
+                        <h1 class="sysf-heading sysf-xl">Auto Masters</h1>
+                    </a>
+                    <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu">
+                        <ul role="list" class="nav-menu-two-2 w-list-unstyled">
+                            <li><a href="#" class="nav-link-2"></a></li>
+                            <li><a href="#" class="nav-link-2"></a></li>
+                            <li><a href="#" class="nav-link-2"></a></li>
+                            <li>
+                                <div data-hover="false" data-delay="0" class="nav-dropdown-2 w-dropdown">
+                                    <div class="nav-dropdown-toggle-2 w-dropdown-toggle" id="w-dropdown-toggle-0"
+                                        aria-controls="w-dropdown-list-0" aria-haspopup="menu" aria-expanded="false"
+                                        role="button" tabindex="0"></div>
+                                    <nav class="nav-dropdown-list-2 shadow-three mobile-shadow-hide w-dropdown-list"
+                                        id="w-dropdown-list-0" aria-labelledby="w-dropdown-toggle-0"><a href="/#"
+                                            class="nav-dropdown-link-2 w-dropdown-link" tabindex="0">Resource Link
+                                            1</a><a href="#" class="nav-dropdown-link-2 w-dropdown-link"
+                                            tabindex="0">Resource Link
+                                            2</a><a href="#" class="nav-dropdown-link-2 w-dropdown-link"
+                                            tabindex="0">Resource Link 3</a>
+                                    </nav>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="nav-divider-2"></div>
+                            </li>
+                            <li><a href="/dashboard" class="nav-link-accent-2">Reserve now</a></li>
+
+                            <% if (userAuth.auth) { %>
+                                <li class="mobile-margin-top-11"><a href="/logout"
+                                        class="button-primary-2 w-button">Logout</a></li>
+                                <% } else { %>
+                                    <li class="mobile-margin-top-11"><a href="/login"
+                                            class="button-primary-2 w-button">Login</a></li>
+                                    <% } %>
+
+
+                        </ul>
+                    </nav>
+                    <div class="menu-button-2 w-nav-button" style="-webkit-user-select: text;" aria-label="menu"
+                        role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu"
+                        aria-expanded="false">
+                        <div class="w-icon-nav-menu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
+        </div>
+    </div>
+
+    <div class="f-section-large">
+        <div class="f-container-regular">
+            <div class="w-layout-grid f-header-grid">
+               
+                <div id="w-node-_454a6754-39cf-ce07-efb8-4a00ba6f035a-b63165d9">
+                    <div class="f-margin-bottom-24">
+                        <h1 class="f-h1-heading">Reserve Our Service Now</h1>
+                    </div>
+                    <div class="f-margin-bottom-32">
+                        <p class="f-paragraph-large">Book your service effortlessly with our user-friendly online web app! Enjoy a hassle-free 
+                            vehicle service experience by scheduling and reserving your spot in just a few clicks. It's that easy....!</p>
+                    </div>
+                    <div class="f-header-button-wrapper"><a href="/dashboard" class="f-button-neutral w-inline-block">
+                            <div>Get Started</div>
+                        </a></div>
+                </div>
+
+                <div class="f-header-image-wrapper-tall"><img src="/static/home/home.jpg" loading="lazy"
+                    sizes="(max-width: 991px) 90vw, 400px" alt="" class="f-image-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

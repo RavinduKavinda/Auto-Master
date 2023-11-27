@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link href="/static/dashboard/dashboard.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/" rel="preconnect">
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/dashboard/dashboard.css" media="all">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    <style>
+        .is-flex-table {
+            overflow-x: auto;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f5f5f5;
+        }
+
+        td {
+            padding: 10px;
+        }
+    </style>
+    <div class="navbar-logo-center">
+        <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+            role="banner" class="navbar-logo-left-container-2 shadow-three w-nav">
+            <div class="container-2">
+                <div class="navbar-wrapper-2"><a href="/" class="navbar-brand-2 w-nav-brand">
+                        <h1 class="sysf-heading sysf-xl">Auto Masters</h1>
+                    </a>
+                    <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu">
+                        <ul role="list" class="nav-menu-two-2 w-list-unstyled">
+                            <li><a href="/reserve" class="nav-link-accent-2">Reserve</a></li>
+                            <li class="mobile-margin-top-11"><a href="/logout"
+                                    class="button-primary-2 w-button">Logout</a></li>
+                        </ul>
+                    </nav>
+                    <div class="menu-button-2 w-nav-button" style="-webkit-user-select: text;" aria-label="menu"
+                        role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu"
+                        aria-expanded="false">
+                        <div class="w-icon-nav-menu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
+        </div>
+    </div>
+    
+    <div class="f-section-large">
+        <div class="f-section-regular">
+            <div class="f-container-regular-2">
+                <div class="">
+                    <div id="w-node-d4c0ae4f-9213-3c19-d19c-08539db2f105-f8b1e56b" class="f-testimonial-card">
+                        <div class="f-margin-bottom-40">
+                            <div class="sysf-tag-2 sysf-tag-success">
+                                <%= userAuth.userDetails.email %>
+                            </div>
+                            <div class="sysf-tag-2 sysf-tag-success">
+                                <%= userAuth.userDetails.user_metadata.phone %>
+                            </div>
+                            <div class="sysf-tag-2 sysf-tag-success">
+                                <img
+                                    src="https://flagcdn.com/48x36/<%= userAuth.userDetails.user_metadata.country %>.png" />
+                            </div>
+                        </div>
+                        <div class="f-testimonial-author">
+                            <div class="f-testimonial-avatar-small">
+                                <img src="<% if ('picture' in userAuth.userDetails) { %>
+                                              <%= userAuth.userDetails.picture %>
+                                            <% } else { %>
+                                              /static/dashboard/avatar.png
+                                            <% } %>" loading="lazy" alt="" class="f-avatar-image">
+                            </div>
+                            <div>
+
+                                <p class="f-paragraph-regular f-text-weight-medium">
+                                    <%= userAuth.userDetails.user_metadata.fullname %>
+                                </p>
+                                <div class="f-paragraph-small">@<%= userAuth.userDetails.username %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="f-h3-heading">Your reservations</h4>
+        <div class="f-section-small">
+            <div class="f-container-regular-3">
+                <div class="f-title-wrapper-center-2 margin-bottom-48">
+                    <% if (userAuth.reservations.length < 1) { %>
+                        <h6 class="f-h6-heading">No reservations</h6>
+                        <% } else { %>
+                            <div class="container is-flex-table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Location</th>
+                                            <th>Vehicle No.</th>
+                                            <th>Milage</th>
+                                            <th>Message</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <% for (let i=0; i < userAuth.reservations.length; i++) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= userAuth.reservations[i].date %>
+                                                </td>
+                                                <td>
+                                                    <%= userAuth.reservations[i].time %>
+                                                </td>
+                                                <td>
+                                                    <%= userAuth.reservations[i].location %>
+                                                </td>
+                                                <td>
+                                                    <%= userAuth.reservations[i].vehicle_no %>
+                                                </td>
+                                                <td>
+                                                    <%= userAuth.reservations[i].mileage %> km
+                                                </td>
+                                                <td>
+                                                    <%= userAuth.reservations[i].message %>
+                                                </td>
+                                                <td>
+                                                    <% const currentDate=new Date(); %>
+                                                        <% if (new Date(userAuth.reservations[i].date)> currentDate) {
+                                                            %>
+                                                            <form action="/delete/" method="post">
+                                                                <input type="hidden" name="_csrf"
+                                                                    value="<%= userAuth.csrf %>">
+                                                                <input type="hidden" name="deleteID"
+                                                                    value="<%= userAuth.reservations[i].booking_id %>">
+                                                                <input type="submit" class="button is-danger"
+                                                                    value="Delete">
+                                                            </form>
+                                                            <% } else { %>
+                                                                <button class="button is-danger"
+                                                                    disabled>Delete</button>
+                                                        <% } %>
+                                                </td>
+
+                                            </tr>
+
+                                        <% } %>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        <% } %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% if ("deleteCount" in userAuth && userAuth.deleteCount> 0){ %>
+        <script>
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfully deleted',
+                text: `<%= userAuth.deleteCount %> reservation(s) have been successfully deleted!`,
+            }).then((result) => {
+                window.location.href = `/dashboard`;
+            });
+
+        </script>
+
+    <% } %>
+
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Reserve</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link href="/static/dashboard/dashboard.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/" rel="preconnect">
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/dashboard/dashboard.css" media="all">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <style>
+        .is-flex-table {
+            overflow-x: auto;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f5f5f5;
+        }
+
+        td {
+            padding: 10px;
+        }
+    </style>
+
+    <div class="navbar-logo-center">
+        <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+            role="banner" class="navbar-logo-left-container-2 shadow-three w-nav">
+            <div class="container-2">
+                <div class="navbar-wrapper-2"><a href="/" class="navbar-brand-2 w-nav-brand">
+                        <h1 class="sysf-heading sysf-xl">Auto Master</h1>
+                    </a>
+                    <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu">
+                        <ul role="list" class="nav-menu-two-2 w-list-unstyled">
+                            <li><a href="/dashboard" class="nav-link-accent-2">Dashboard</a></li>
+                            <li class="mobile-margin-top-11"><a href="/logout"
+                                    class="button-primary-2 w-button">Logout</a></li>
+                        </ul>
+                    </nav>
+                    <div class="menu-button-2 w-nav-button" style="-webkit-user-select: text;" aria-label="menu"
+                        role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu"
+                        aria-expanded="false">
+                        <div class="w-icon-nav-menu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
+        </div>
+    </div>
+
+    <div class="f-section-large">
+       
+
+        <h4 class="f-h3-heading">Make a New Reservation</h4>
+        <section class="section">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-half">
+                        <form action="/reserve" method="POST" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="_csrf" value="<%= userAuth.csrf %>">
+
+                            <div class="field">
+                                <label class="label">Date</label>
+                                <div class="control">
+                                    <input class="input" type="date" name="date" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Time</label>
+                                <div class="control">
+                                    <input class="input" type="time" name="time" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Location</label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="location" <% if ('userInputs' in userAuth) { %> value="<%=
+                                                userAuth.userInputs.location %>" <% } %> required>
+                                                    <option value="">Select District</option>
+                                                    <option value="Colombo">Colombo</option>
+                                                    <option value="Gampaha">Gampaha</option>
+                                                    <option value="Kandy">Kandy</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Vehicle Number</label>
+                                <div class="control">
+                                    <input class="input" placeholder="AB-1234" type="text" name="vehicle_no" required <%
+                                        if ('userInputs' in userAuth) { %> value="<%= userAuth.userInputs.vehicle_no %>"
+                                        <% } %>>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Mileage</label>
+                                <div class="control">
+                                    <input placeholder="23" class="input" type="number" name="mileage" required <% if
+                                        ('userInputs' in userAuth) { %> value="<%= userAuth.userInputs.mileage %>"
+                                        <% } %>>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Message</label>
+                                <div class="control">
+                                    <textarea placeholder="Put off the battery" class="textarea" name="message" required
+                                        <% if ('userInputs' in userAuth) { %> value="<%= userAuth.userInputs.message %>"
+                                    <% } %>></textarea>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <% if ("validations" in userAuth && userAuth.validations.length> 0) { %>
+        <script defer>
+
+            const alertText = `<%= userAuth.validations.join('\\n') %>`;
+            Swal.fire({
+                icon: 'error',
+                title: 'Please fix below errors',
+                text: alertText,
+            });    </script>
+
+        <% } else if ("validations" in userAuth && userAuth.validations.length < 1){ %>
+            <script>
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully saved',
+                    text: 'You have successfully booked your time slot!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/dashboard';
+                    } else {
+                        window.location.href = '/dashboard';
+                    }
+                });
+
+            </script>
+
+        <% } %>
+
+</body>
+
+</html>
